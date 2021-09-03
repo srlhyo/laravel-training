@@ -15,8 +15,16 @@ class CreateUserOrganisationsTable extends Migration
     {
         Schema::create('user_organisations', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id');
-            $table->bigInteger('organisation_id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('organisation_id')->unsigned();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('organisation_id')
+            ->references('id')
+            ->on('organisation')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
